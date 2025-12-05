@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     VERSION: str = "1.0.0"
     DEBUG: bool = True
 
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "postgresql://docuser:docpass@localhost:5432/docservice")
+    DATABASE_URL: str = os.getenv("DATABASE_URL")
 
     STORAGE_DIR: Path = Path("./storage")
     STORAGE_DIR.mkdir(exist_ok=True)

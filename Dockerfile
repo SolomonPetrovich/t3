@@ -1,31 +1,19 @@
-FROM python:3.14-slim AS builder
+FROM python:3.14-slim
 
-WORKDIR /app
+WORKDIR /docserver
 
+# Install dependencies
 COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN apt-get update && apt-get install -y \
-    libpq-dev \
-    gcc \
-    python3-dev
+# Copy application code
+COPY app/ /docserver/app/
 
-FROM python:3.14-slim AS runtime
-WORKDIR /app
-
-RUN apt-get update \
- && apt-get install -y --no-install-recommends \
-      libpq5 \
-      ca-certificates \
- && rm -rf /var/lib/apt/lists/*
-
-COPY --from=builder /wheels /wheels
-RUN python -m pip install --no-index --find-links /wheels --no-cache-dir "*" \
- && rm -rf /wheels
-
-COPY app/ .
-
+# Create storage directory
 RUN mkdir -p /app/storage
 
+# Expose port
 EXPOSE 8000
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Run application
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

@@ -1,3 +1,4 @@
+aiosqlite==0.21.0
 annotated-doc==0.0.4
 annotated-types==0.7.0
 anyio==4.12.0
@@ -25,7 +26,6 @@ MarkupSafe==3.0.3
 mdurl==0.1.2
 openai==2.9.0
 orjson==3.11.4
-psycopg2-binary==2.9.9
 pydantic==2.12.5
 pydantic-extra-types==2.10.6
 pydantic-settings==2.12.0
